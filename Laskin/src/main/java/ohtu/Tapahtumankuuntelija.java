@@ -12,7 +12,7 @@ public class Tapahtumankuuntelija implements ActionListener {
     private JButton undo;
     private Sovelluslogiikka sovellus;
     private Map<JButton, Komento> komennot;
-    //private Komento edellinen;
+    private Komento edellinen;
  
     public Tapahtumankuuntelija(JButton plus, JButton miinus, JButton nollaa, JButton undo, JTextField tuloskentta, JTextField syotekentta) {
         this.nollaa = nollaa;
@@ -31,9 +31,14 @@ public class Tapahtumankuuntelija implements ActionListener {
         
         if (komento != null) {
             komento.suorita();
+            edellinen = komento;
+        } else {
+            edellinen.peru();
+            edellinen = null;
         }
         
         nollaa.setEnabled(sovellus.tulos() != 0);
+        undo.setEnabled(edellinen!=null);
     }
  
 }
